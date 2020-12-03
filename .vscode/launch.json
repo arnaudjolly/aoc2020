@@ -1,0 +1,32 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "day03 - test input",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/day03/day03.js",
+            "args": [
+                "${workspaceFolder}/day03/test-input"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "day03 - real input",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/day03/day03.js",
+            "args": [
+                "${workspaceFolder}/day03/input"
+            ]
+        }
+    ]
+}
