@@ -7,6 +7,30 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "day05 - test input (part 1)",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/day05/day05.js",
+            "args": [
+                "${workspaceFolder}/day05/test-input-1"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "day05 - real input (part 1)",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/day05/day05.js",
+            "args": [
+                "${workspaceFolder}/day05/input"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "day04 - test input (part 1)",
             "skipFiles": [
                 "<node_internals>/**"
