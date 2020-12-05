@@ -74,13 +74,15 @@ seat numbers are consecutive so... find the missing one between min and max
 */
 
 function solve_puzzle_part2(numbers) {
-    let [min, max, sum] = [128*8, 0, 0];
 
-    numbers.forEach(n => {
-        if (n < min) min = n;
-        if (n > max) max = n;
-        sum += n;
-    });
+    const {min, max, sum} = numbers.reduce((acc, n) => (
+        {
+            min: Math.min(acc.min, n),
+            max: Math.max(acc.max, n),
+            sum: acc.sum + n
+        }),
+        { min: 1024, max: 0, sum: 0}
+    );
 
     const expected_sum = (min+max) * (max-min+1) / 2;
     return expected_sum - sum;

@@ -7,7 +7,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "day05 - test input (part 1)",
+            "name": "day05 - test input",
             "skipFiles": [
                 "<node_internals>/**"
             ],
@@ -19,7 +19,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "day05 - real input (part 1)",
+            "name": "day05 - real input",
             "skipFiles": [
                 "<node_internals>/**"
             ],
