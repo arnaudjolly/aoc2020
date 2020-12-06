@@ -56,18 +56,14 @@ let current_group_letters = new Set();
 function handle_line_part1(line) {
     line = line.trim();
     if (line === '') {
-        close_group1();
+        part1_result += current_group_letters.size;
+        current_group_letters.clear();
         return;
     }
 
     for (const c of line.split('')) {
         current_group_letters.add(c);
     }
-}
-
-function close_group1() {
-    part1_result += current_group_letters.size;
-    current_group_letters.clear();
 }
 
 /*
@@ -113,7 +109,8 @@ let part2_common_letters = null;
 function handle_line_part2(line) {
     line = line.trim();
     if (line === '') {
-        close_group2();
+        part2_result += part2_common_letters.size;
+        part2_common_letters = null;
         return;
     }
 
@@ -130,10 +127,6 @@ function handle_line_part2(line) {
     }
 }
 
-function close_group2() {
-    part2_result += part2_common_letters.size;
-    part2_common_letters = null;
-}
 
 /*
 Now that we have all we need to solve the puzzle, let's read the input
@@ -149,8 +142,6 @@ ri.on('line', line => {
     handle_line_part2(line);
 });
 ri.on('close', function () {
-    close_group1();
-    close_group2();
     console.log("result part1:", part1_result);
     console.log("result part2:", part2_result);
 });
