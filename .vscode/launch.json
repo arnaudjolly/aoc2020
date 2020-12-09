@@ -11,7 +11,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}/day08/day08.js",
+            "program": "${workspaceFolder}/day08/day08bis.js",
             "args": [
                 "${workspaceFolder}/day08/test-input"
             ]
@@ -23,7 +23,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}/day08/day08.js",
+            "program": "${workspaceFolder}/day08/day08bis.js",
             "args": [
                 "${workspaceFolder}/day08/input"
             ]
