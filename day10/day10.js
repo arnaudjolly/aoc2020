@@ -1,6 +1,5 @@
 const readline = require('readline');
 const fs = require('fs');
-const { COPYFILE_FICLONE_FORCE } = require('constants');
 
 /*
 --- Day 10: Adapter Array ---
