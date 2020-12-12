@@ -90,6 +90,90 @@ function doMove(action, state){
 }
 
 /*
+--- Part Two ---
+Before you can give the destination to the captain, you realize that the actual action meanings were printed on the back of the instructions the whole time.
+
+Almost all of the actions indicate how to move a waypoint which is relative to the ship's position:
+
+Action N means to move the waypoint north by the given value.
+Action S means to move the waypoint south by the given value.
+Action E means to move the waypoint east by the given value.
+Action W means to move the waypoint west by the given value.
+Action L means to rotate the waypoint around the ship left (counter-clockwise) the given number of degrees.
+Action R means to rotate the waypoint around the ship right (clockwise) the given number of degrees.
+Action F means to move forward to the waypoint a number of times equal to the given value.
+
+The waypoint starts 10 units east and 1 unit north relative to the ship.
+The waypoint is relative to the ship; that is, if the ship moves, the waypoint moves with it.
+
+For example, using the same instructions as above:
+
+- F10 moves the ship to the waypoint 10 times (a total of 100 units east and 10 units north), leaving the ship at east 100, north 10.
+  The waypoint stays 10 units east and 1 unit north of the ship.
+
+- N3 moves the waypoint 3 units north to 10 units east and 4 units north of the ship. The ship remains at east 100, north 10.
+
+- F7 moves the ship to the waypoint 7 times (a total of 70 units east and 28 units north), leaving the ship at east 170, north 38.
+  The waypoint stays 10 units east and 4 units north of the ship.
+
+- R90 rotates the waypoint around the ship clockwise 90 degrees, moving it to 4 units east and 10 units south of the ship.
+  The ship remains at east 170, north 38.
+
+- F11 moves the ship to the waypoint 11 times (a total of 44 units east and 110 units south), leaving the ship at east 214, south 72.
+  The waypoint stays 4 units east and 10 units south of the ship.
+
+After these operations, the ship's Manhattan distance from its starting position is 214 + 72 = 286.
+
+Figure out where the navigation instructions actually lead. What is the Manhattan distance between that location and the ship's starting position?
+*/
+
+const times = n => f => arg => {
+    if (n == 1) return f(arg);
+    return times(n-1)(f)(f(arg));
+};
+
+const move_wp_north = n => state => ({...state, wp: go_north(n)(state.wp)});
+const move_wp_east = n => state => ({...state, wp: go_east(n)(state.wp)});
+const move_wp_south = n => move_wp_north(-n);
+const move_wp_west = n => move_wp_east(-n);
+
+const rotate_clockwise = wp => ({ north: -wp.east, east: wp.north});
+const rotate_counter_clockwise = wp => ({ north: wp.east, east: -wp.north});
+const rotate_wp = direction => n => state => ({...state, wp: times(n/90)(direction)(state.wp)});
+const rotate_wp_clockwise = rotate_wp(rotate_clockwise);
+const rotate_wp_counter_clockwise = rotate_wp(rotate_counter_clockwise);
+
+const move_ship_forward = n => state => ({...state, ship: go_north(n * state.wp.north)(go_east(n * state.wp.east)(state.ship))});
+
+function doMove_part2(action, state){
+    switch(action.action) {
+        case 'N': return move_wp_north(action.number)(state);
+        case 'S': return move_wp_south(action.number)(state);
+        case 'E': return move_wp_east(action.number)(state);
+        case 'W': return move_wp_west(action.number)(state);
+
+        case 'R': return rotate_wp_clockwise(action.number)(state);
+        case 'L': return rotate_wp_counter_clockwise(action.number)(state);
+        
+        case 'F': return move_ship_forward(action.number)(state);
+        
+        default: throw "unknown action " + action.action;
+    }
+}
+
+function solve_puzzle_part2(actions) {
+    let end_state = actions.reduce(
+        (state, action) => doMove_part2(action, state),
+        {
+            ship: {east: 0, north: 0},
+            wp: {east: 10, north: 1}
+        }
+    );
+
+    return Math.abs(end_state.ship.east) + Math.abs(end_state.ship.north);
+}
+
+/*
 Now that we have all we need to solve the puzzle, let's read the input
 */
 const input_file = process.argv.slice(2)[0];
@@ -108,4 +192,5 @@ let input = [];
 ri.on('line', line => input.push(parseLine(line)));
 ri.on('close', function () {
     console.log("result part1:", solve_puzzle_part1(input));
+    console.log("result part2:", solve_puzzle_part2(input));
 });
